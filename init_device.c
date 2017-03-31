@@ -15,22 +15,6 @@ void                     capability_requests(t_camera *camera) {
   printf("Camera name: %s\n", (char*)cap.card);
 }
 
-void                     cropcap_requests(t_camera *camera) {
-  struct v4l2_cropcap    cropcap;
-  struct v4l2_crop       crop;
-
-  memset(&cropcap, 0, sizeof(cropcap));
-  cropcap.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-  if (!multi_ioctl(camera->fd, VIDIOC_CROPCAP, &cropcap)) {
-    crop.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    crop.c = cropcap.defrect;
-    if (multi_ioctl(camera->fd, VIDIOC_S_CROP, &crop) == -1)
-      printf("Cropping not supported\n");
-    else
-      printf("Cropping supported\n");
-  }
-}
-
 void                     format_request(t_camera *camera) {
 
   struct v4l2_format     format;
@@ -65,7 +49,6 @@ void                     init_device(t_camera *camera) {
   size_t                 i;
 
   capability_requests(camera);
-  cropcap_requests(camera);
   format_request(camera);
   buffer_request(camera);
 
@@ -86,4 +69,5 @@ void                     init_device(t_camera *camera) {
       exit_failure("mmap error");
   }
   camera->head.start = malloc(buf_max);
+  camera->prev = malloc(buf_max);
 }

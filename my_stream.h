@@ -10,9 +10,21 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <linux/videodev2.h>
-#include <jpeglib.h>
 
+#define RGB_DIFF        20
+#define PIXEL_DIFF      100000
+
+#define RGB_MAX         255
+#define RGB_MIN         0
+#define MINMAX(min, max, v) (v > max) ? max : (v < min) ? min : v;
+#define PIXEL_COLOR_DIFF(a, b) (((a > b) ? a - b : b - a) > RGB_DIFF)
 #define QUALITY         100
+
+typedef struct {
+  uint8_t               r;
+  uint8_t               g;
+  uint8_t               b;
+}                       t_color;
 
 typedef struct          s_buffer {
   uint8_t               *start;
@@ -27,6 +39,7 @@ typedef struct          s_camera {
   size_t                buffer_count;
   t_buffer              *buffers;
   t_buffer              head;
+  uint8_t               *prev;
 }                       t_camera;
 
 void                    exit_failure(const char *e);
@@ -42,7 +55,11 @@ void                    start_camera(t_camera *camera);
 void                    stop_camera(t_camera *camera);
 int                     camera_capture(t_camera *camera);
 int                     camera_frame(t_camera* camera, struct timeval timeouts);
+void                    write_jpeg_file(int out, t_camera *camera);
 uint8_t*                yuyv_to_rgb(uint8_t* yuyv, uint32_t width, uint32_t height);
-void                    write_jpeg_file(FILE *out, uint8_t *rgb, t_camera *camera);
+
+void                    set_color(uint8_t *rgb, t_color *color);
+int                     cmp_color(t_color a, t_color b);
+int                     cmp_rgb(uint8_t *rgb1, uint8_t *rgb2, uint32_t width, uint32_t height);
 
 #endif

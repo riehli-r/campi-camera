@@ -18,6 +18,7 @@ void                    stop_camera(t_camera *camera) {
   free(camera->head.start);
   camera->head.length = 0;
   camera->head.start = NULL;
+  free(camera->prev);
 
   if (close(camera->fd) == -1)
     exit_failure("Close file");

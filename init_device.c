@@ -69,5 +69,5 @@ void                     init_device(t_camera *camera) {
       exit_failure("mmap error");
   }
   camera->head.start = malloc(buf_max);
-  camera->prev = malloc(buf_max);
+  camera->prev = malloc(WIDTH * HEIGHT * 3);
 }

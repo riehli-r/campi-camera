@@ -11,7 +11,8 @@ void                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint32_
   size_t                j;
   uint8_t               *rgb;
 
-  rgb = yuyv_to_rgb(yuyv, width, height);
+  //rgb = yuyv_to_rgb(yuyv, width, height);
+  rgb = yuyv;
   sprintf(filename, "photos/%d.jpg", time(NULL));
   dest = fopen(filename, "w");
   image = calloc(height, sizeof (JSAMPROW));

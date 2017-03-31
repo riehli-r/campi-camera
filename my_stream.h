@@ -15,16 +15,19 @@
 #include <jpeglib.h>
 
 #define INIT_FRAME      5
-#define WIDTH           1920
-#define HEIGHT          1080
+#define WIDTH           1280
+#define HEIGHT          720
 #define RGB_DIFF        20
-#define PIXEL_DIFF      100000
+#define PIXEL_DIFF      200
 
 #define RGB_MAX         255
 #define RGB_MIN         0
 #define MINMAX(min, max, v) (v > max) ? max : (v < min) ? min : v;
 #define PIXEL_COLOR_DIFF(a, b) (((a > b) ? a - b : b - a) > RGB_DIFF)
 #define QUALITY         100
+
+#define RETURN_ON_LMT   1
+#define CONTINUE_ON_LMT 0
 
 typedef struct {
   uint8_t               r;
@@ -69,7 +72,7 @@ void                    save_current_jpeg(uint8_t* rgb, uint32_t width, uint32_t
 /** ================= MOVEMENTS ================= **/
 void                    set_color(uint8_t *rgb, t_color *color);
 int                     cmp_color(t_color a, t_color b);
-int                     cmp_rgb(uint8_t *rgb1, uint8_t *rgb2, uint32_t width, uint32_t height);
+int                     cmp_rgb(uint8_t *rgb1, uint8_t *rgb2, uint32_t width, uint32_t height, short limit);
 
 /** ================= DEV TOOLS ================= **/
 void                    display_jpg(t_buffer jpg);

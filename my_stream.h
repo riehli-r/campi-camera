@@ -18,7 +18,7 @@
 
 #include <jpeglib.h>
 
-#define INIT_FRAME      5
+#define INIT_FRAME      10
 #define WIDTH           1280
 #define HEIGHT          720
 #define RGB_DIFF        20
@@ -42,7 +42,7 @@
 #define RECV_ERROR      -1
 
 #define STEP(s)         printf("%s:", s);
-#define VALIDATE()      printf("OK\n");
+#define VALIDATE()      printf("\033[32mOK\033[0m\n");
 
 typedef int             SOCKET;
 typedef struct sockaddr_in SOCKADDR_IN;
@@ -53,7 +53,7 @@ typedef struct {
   char                  *id;
   char                  *label;
   unsigned short        state;
-  float        precision;
+  float                 precision;
 }                       t_info;
 
 typedef struct          s_buffer {

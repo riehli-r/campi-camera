@@ -15,7 +15,6 @@ SRC 		= main.c							\
 					set_color.c					\
 					start_camera.c 			\
 					stop_camera.c				\
-					write_jpeg_file.c		\
 					yuyv_to_rgb.c
 OBJ 		= $(SRC:.c=.o)
 RM 			= rm -rf

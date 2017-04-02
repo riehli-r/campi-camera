@@ -40,6 +40,7 @@ SOCKADDR_IN         get_server_ip() {
   size_sockaddr = sizeof(server_info);
   recvfrom(sock, buffer, sizeof(buffer), 0, (SOCKADDR*)&server_info, &size_sockaddr);
   VALIDATE();
+  printf("One server found: \033[34m%s\033[0m\n", inet_ntoa(server_info.sin_addr));
   printf("Server %s send: %s\n", inet_ntoa(server_info.sin_addr), buffer);
   free(buffer);
   return (server_info);
@@ -81,6 +82,7 @@ int                 main(int argc, char **argv) {
   char              *device;
   uint8_t           *rgb;
   time_t            last_time;
+  int               i;
 
   get_infos(get_server_ip());
 
@@ -95,9 +97,14 @@ int                 main(int argc, char **argv) {
   camera = open_device(device, WIDTH, HEIGHT, argv[1]);
   printf("Detection:\n");
   last_time = 0;
-  while(1) {
+  for (i = 0; i < 20; i++) {
+  //while(1) {
     camera_frame(camera);
-    if (last_time != time(NULL)) {
+    if (!i) {
+      rgb = yuyv_to_rgb(camera->head.start, WIDTH, HEIGHT);
+      memcpy(camera->prev, rgb, WIDTH * HEIGHT * 3);
+    }
+    if (last_time != time(NULL) && i) {
       rgb = yuyv_to_rgb(camera->head.start, WIDTH, HEIGHT);
       diff = cmp_rgb(camera->prev, rgb, WIDTH, HEIGHT, CONTINUE_ON_LMT);
       if ((diff * 100) /  (WIDTH * HEIGHT) >= 2.5) {

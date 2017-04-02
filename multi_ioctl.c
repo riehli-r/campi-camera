@@ -1,6 +1,6 @@
 #include "my_stream.h"
 
-int                     multi_ioctl(int fd, int request, void* arg) {
+int                     multi_ioctl(int fd, unsigned long request, void* arg) {
 
   unsigned int          i;
   int                   ret;

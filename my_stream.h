@@ -81,7 +81,7 @@ typedef struct {
 }                       t_color;
 
 void                    exit_failure(const char *e);
-int                     multi_ioctl(int fd, int request, void* arg);
+int                     multi_ioctl(int fd, unsigned long request, void* arg);
 
 t_camera*               open_device(const char* dev, uint32_t width, uint32_t height, char *label);
 void                    capability_requests(t_camera *camera);

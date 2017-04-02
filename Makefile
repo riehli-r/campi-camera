@@ -1,6 +1,6 @@
 CC 			= gcc
 CNAME 	= webcam
-CFLAGS 	= -Wall -pedantic -ljpeg
+CFLAGS 	= -Wall -Werror -Wpedantic -Wextra -ljpeg
 SRC 		= main.c							\
 					camera_capture.c		\
 					camera_frame.c			\

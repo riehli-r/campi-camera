@@ -1,8 +1,8 @@
 #include "my_stream.h"
 
-int                     cmp_rgb(uint8_t *rgb1, uint8_t *rgb2, uint32_t width, uint32_t height, short limit) {
+int                  cmp_rgb(uint8_t *rgb1, uint8_t *rgb2, uint32_t width, uint32_t height, short limit) {
 
-   int               i;
+   uint32_t          i;
    t_color           color1;
    t_color           color2;
    int               diff;

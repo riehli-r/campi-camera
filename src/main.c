@@ -27,7 +27,7 @@ SOCKADDR_IN         get_server_ip() {
   sin.sin_family = AF_INET;
   sin.sin_port = htons(DGRAM_PORT);
   buffer = "Hello Dude";
-  ret = sendto(sock, buffer, strlen(buffer) + 1, 0, (SOCKADDR*)&sin, sizeof(sin));
+  ret = sendto(sock, buffer, strlend(buffer), 0, (SOCKADDR*)&sin, sizeof(sin));
   if (ret == SEND_ERROR)
     exit_failure("SEND_TO");
   VALIDATE();
@@ -52,27 +52,34 @@ void                get_infos(SOCKADDR_IN sin) {
   char              *buffer;
   int               ret;
 
+  STEP("Create TCP socket");
   sin.sin_port = htons(STREAM_PORT);
   sock = socket(AF_INET, SOCK_STREAM, 0);
   if (sock == INVALID_SOCKET)
     exit_failure("INVALID_SOCKET");
+  VALIDATE();
 
+  STEP("Connection to the server");
   ret = connect(sock, (SOCKADDR*)&sin, sizeof(sin));
   if (ret == SOCKET_ERROR)
     exit_failure("connect");
+  VALIDATE();
 
+  STEP("First contact with the server");
   buffer = "More private now";
-  ret = send(sock, buffer, strlen(buffer) + 1, 0);
+  ret = send(sock, buffer, strlend(buffer), 0);
   if (ret == SEND_ERROR)
     exit_failure("send");
-
+  printf("Say: More private now\n");
   buffer = calloc(BUFF_SIZE, sizeof(char));
   ret = recv(sock, buffer, sizeof(buffer), 0);
   if (ret == RECV_ERROR)
     exit_failure("recv");
-
   printf("Server say: %s\n", buffer);
+  VALIDATE();
+
   free(buffer);
+  close(sock);
 }
 
 int                 main(int argc, char **argv) {

@@ -40,6 +40,7 @@
 #define SOCKET_ERROR    -1
 #define SEND_ERROR      -1
 #define RECV_ERROR      -1
+#define strlend(s)      strlen(s) + 1
 
 #define STEP(s)         printf("%s:", s);
 #define VALIDATE()      printf("\033[32mOK\033[0m\n");

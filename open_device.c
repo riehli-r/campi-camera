@@ -1,6 +1,6 @@
 #include "my_stream.h"
 
-t_camera*                  open_device(const char *dev, uint32_t width, uint32_t height) {
+t_camera*                  open_device(const char *dev, uint32_t width, uint32_t height, char *label) {
 
   int                      fd;
   int                      i;
@@ -12,6 +12,7 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
   camera = malloc(sizeof(t_camera));
   if (!camera)
     exit_failure("camera malloc error");
+  camera->infos.label = label;
   camera->fd = fd;
   camera->width = width;
   camera->height = height;

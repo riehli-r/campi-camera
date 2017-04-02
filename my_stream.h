@@ -11,6 +11,10 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <linux/videodev2.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/types.h>
 
 #include <jpeglib.h>
 
@@ -18,7 +22,7 @@
 #define WIDTH           1280
 #define HEIGHT          720
 #define RGB_DIFF        20
-#define PIXEL_DIFF      200
+#define PIXEL_DIFF      2.5
 
 #define RGB_MAX         255
 #define RGB_MIN         0
@@ -29,11 +33,28 @@
 #define RETURN_ON_LMT   1
 #define CONTINUE_ON_LMT 0
 
+#define BUFF_SIZE       2048
+#define DGRAM_PORT      5656
+#define STREAM_PORT     4848
+#define INVALID_SOCKET  -1
+#define SOCKET_ERROR    -1
+#define SEND_ERROR      -1
+#define RECV_ERROR      -1
+
+#define STEP(s)         printf("%s:", s);
+#define VALIDATE()      printf("OK\n");
+
+typedef int             SOCKET;
+typedef struct sockaddr_in SOCKADDR_IN;
+typedef struct sockaddr SOCKADDR;
+typedef struct in_addr  IN_ADDR;
+
 typedef struct {
-  uint8_t               r;
-  uint8_t               g;
-  uint8_t               b;
-}                       t_color;
+  char                  *id;
+  char                  *label;
+  unsigned short        state;
+  float        precision;
+}                       t_info;
 
 typedef struct          s_buffer {
   uint8_t               *start;
@@ -42,6 +63,7 @@ typedef struct          s_buffer {
 
 typedef struct          s_camera {
 
+  t_info                infos;
   int                   fd;
   uint32_t              width;
   uint32_t              height;
@@ -52,10 +74,16 @@ typedef struct          s_camera {
   struct timeval        timeout;
 }                       t_camera;
 
+typedef struct {
+  uint8_t               r;
+  uint8_t               g;
+  uint8_t               b;
+}                       t_color;
+
 void                    exit_failure(const char *e);
 int                     multi_ioctl(int fd, int request, void* arg);
 
-t_camera*               open_device(const char* dev, uint32_t width, uint32_t height);
+t_camera*               open_device(const char* dev, uint32_t width, uint32_t height, char *label);
 void                    capability_requests(t_camera *camera);
 void                    cropcap_requests(t_camera *camera);
 void                    format_request(t_camera *camera);

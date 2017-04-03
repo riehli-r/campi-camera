@@ -8,6 +8,8 @@ SRC 		= src/main.c							\
 					src/cmp_rgb.c						\
 					src/dev_tool.c					\
 					src/exit_failure.c 			\
+					src/get_infos.c					\
+					src/get_server_ip.c			\
 					src/init_device.c 			\
 					src/multi_ioctl.c 			\
 					src/open_device.c 			\

@@ -15,6 +15,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/types.h>
+#include <ifaddrs.h>
 
 #include <jpeglib.h>
 
@@ -35,7 +36,7 @@
 
 #define BUFF_SIZE       2048
 #define DGRAM_PORT      8082
-#define STREAM_PORT     4545
+#define STREAM_PORT     8080
 #define INVALID_SOCKET  -1
 #define SOCKET_ERROR    -1
 #define SEND_ERROR      -1
@@ -83,6 +84,9 @@ typedef struct {
 
 void                    exit_failure(const char *e);
 int                     multi_ioctl(int fd, unsigned long request, void* arg);
+
+SOCKADDR_IN             get_server_ip();
+void                    get_infos(SOCKADDR_IN sin);
 
 t_camera*               open_device(const char* dev, uint32_t width, uint32_t height, char *label);
 void                    capability_requests(t_camera *camera);

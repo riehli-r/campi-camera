@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 void                    exit_failure(const char *mesg) {
 

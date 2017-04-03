@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 t_camera*                  open_device(const char *dev, uint32_t width, uint32_t height, char *label) {
 

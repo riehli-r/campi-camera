@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 int                     camera_frame(t_camera* camera) {
 

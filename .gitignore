@@ -1,3 +1,5 @@
 *.o
 photos/
-campi-camera
+bin/
+obj/
+src/campi

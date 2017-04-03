@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 int                 cmp_color(t_color a, t_color b) {
   return (PIXEL_COLOR_DIFF(a.r, b.r) ||

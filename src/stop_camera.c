@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 void                    stop_camera(t_camera *camera) {
 

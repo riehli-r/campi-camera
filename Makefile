@@ -1,36 +1,41 @@
 CC 			= gcc
 CNAME 	= campi-camera
-CFLAGS 	= -Wall -Werror -Wpedantic -Wextra -ljpeg
-SRC 		= src/main.c							\
-					src/camera_capture.c		\
-					src/camera_frame.c			\
-					src/cmp_color.c					\
-					src/cmp_rgb.c						\
-					src/dev_tool.c					\
-					src/exit_failure.c 			\
-					src/get_infos.c					\
-					src/get_server_ip.c			\
-					src/init_device.c 			\
-					src/multi_ioctl.c 			\
-					src/open_device.c 			\
-					src/save_current_jpeg.c	\
-					src/set_color.c					\
-					src/start_camera.c 			\
-					src/stop_camera.c				\
-					src/yuyv_to_rgb.c
+CFLAGS 	= -Wall -Werror -Wpedantic -Wextra
+CLIBS		= -ljpeg
 
-OBJ 		= $(SRC:.c=.o)
+SRCDIR	= src
+OBJDIR	= obj
+INCDIR	= inc
+TARDIR 	= bin
+
+SRC			= $(wildcard $(SRCDIR)/*.c)
+INC			=	$(INCDIR)/webcam.h
+OBJ 		= $(patsubst %.c, $(OBJDIR)/%.o, $(SRC))
+
 RM 			= rm -rf
 
 all: 			$(CNAME)
 
-$(CNAME): $(OBJ)
-					$(CC) $(OBJ) $(CFLAGS) -o $(CNAME)
+$(OBJDIR)/%.o: %.c
+	  			+@[ -d $(OBJDIR) ] || mkdir $(OBJDIR)
+					+@[ -d $(OBJDIR)/$(SRCDIR) ] || mkdir $(OBJDIR)/$(SRCDIR)
+					$(CC) -o $@ -c $< $(CFLAGS) $(CLIBS)
+
+cp_inc:
+					+@[ -d $(SRCDIR)/campi ] || mkdir $(SRCDIR)/campi
+					@cp $(INCDIR)/*.h  $(SRCDIR)/campi/
+
+rm_inc:
+					@$(RM) src/campi/
+
+$(CNAME): cp_inc $(OBJ) rm_inc
+					+@ [ -d $(TARDIR) ] || mkdir $(TARDIR)
+					$(CC) $(OBJ) $(CFLAGS) $(CLIBS) -o $(TARDIR)/$(CNAME)
 
 clean:
-					$(RM) $(OBJ)
+					@$(RM) $(OBJDIR)
 
-fclean: 	clean
-					$(RM) $(CNAME)
+fclean: 	clean rm_inc
+					@$(RM) $(TARDIR)
 
 re: 			fclean all

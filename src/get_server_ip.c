@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 SOCKADDR_IN             get_server_ip() {
   SOCKET                sock;

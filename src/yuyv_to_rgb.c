@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 uint8_t*                yuyv_to_rgb(uint8_t* yuyv, uint32_t width, uint32_t height)
 {

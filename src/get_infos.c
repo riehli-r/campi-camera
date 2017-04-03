@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 void                    get_infos(SOCKADDR_IN sin) {
 

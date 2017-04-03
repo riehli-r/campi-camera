@@ -1,4 +1,4 @@
-#include "my_stream.h"
+#include "campi/webcam.h"
 
 void                    display_jpg(t_buffer jpg) {
   size_t                i;

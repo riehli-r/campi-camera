@@ -34,8 +34,8 @@
 #define CONTINUE_ON_LMT 0
 
 #define BUFF_SIZE       2048
-#define DGRAM_PORT      5656
-#define STREAM_PORT     4848
+#define DGRAM_PORT      8082
+#define STREAM_PORT     4545
 #define INVALID_SOCKET  -1
 #define SOCKET_ERROR    -1
 #define SEND_ERROR      -1

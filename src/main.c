@@ -1,4 +1,5 @@
 #include "my_stream.h"
+#include <ifaddrs.h>
 
 SOCKADDR_IN         get_server_ip() {
   SOCKET            sock;
@@ -8,6 +9,18 @@ SOCKADDR_IN         get_server_ip() {
   int               ret;
   int               broadcast;
   unsigned int      size_sockaddr;
+
+/*
+  struct ifaddrs    *ifaddress;
+  struct ifaddrs    *tmp;
+  int i;
+  i = 0;
+
+  getifaddrs(&ifaddress);
+  for (tmp = ifaddress; tmp; tmp = tmp->ifa_next) {
+    printf("%s %d\n", tmp->ifu_broadaddr->sin_addr, i);
+    i++;
+  }*/
 
   STEP("Init broadcast socket");
   sock = socket(AF_INET, SOCK_DGRAM, 0);
@@ -23,7 +36,7 @@ SOCKADDR_IN         get_server_ip() {
   VALIDATE();
 
   STEP("Send request to broadcast");
-  sin.sin_addr.s_addr = inet_addr("255.255.255.255");
+  sin.sin_addr.s_addr = inet_addr("172.16.4.255");
   sin.sin_family = AF_INET;
   sin.sin_port = htons(DGRAM_PORT);
   buffer = "Hello Dude";
@@ -31,14 +44,13 @@ SOCKADDR_IN         get_server_ip() {
   if (ret == SEND_ERROR)
     exit_failure("SEND_TO");
   VALIDATE();
-
   buffer = calloc(BUFF_SIZE, sizeof(char));
   if (!buffer)
     exit_failure("malloc dgram buffer");
 
   STEP("Receive date from main server");
   size_sockaddr = sizeof(server_info);
-  recvfrom(sock, buffer, sizeof(buffer), 0, (SOCKADDR*)&server_info, &size_sockaddr);
+  recvfrom(sock, buffer, BUFF_SIZE, 0, (SOCKADDR*)&server_info, &size_sockaddr);
   VALIDATE();
   printf("One server found: \033[34m%s\033[0m\n", inet_ntoa(server_info.sin_addr));
   printf("Server %s send: %s\n", inet_ntoa(server_info.sin_addr), buffer);

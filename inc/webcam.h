@@ -19,6 +19,7 @@
 
 #include <jpeglib.h>
 
+#define DEFAULT_LABEL   "default_label"
 #define INIT_FRAME      10
 #define WIDTH           1280
 #define HEIGHT          720
@@ -86,9 +87,9 @@ void                    exit_failure(const char *e);
 int                     multi_ioctl(int fd, unsigned long request, void* arg);
 
 SOCKADDR_IN             get_server_ip();
-void                    get_infos(SOCKADDR_IN sin);
+void                    get_infos(SOCKADDR_IN sin, t_camera *camera);
 
-t_camera*               open_device(const char* dev, uint32_t width, uint32_t height, char *label);
+t_camera*               open_device(const char* dev, uint32_t width, uint32_t height);
 void                    capability_requests(t_camera *camera);
 void                    cropcap_requests(t_camera *camera);
 void                    format_request(t_camera *camera);

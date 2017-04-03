@@ -9,21 +9,20 @@ int                 main(int argc, char **argv) {
   time_t            last_time;
   int               i;
 
-  get_infos(get_server_ip());
 
-  if (argc < 2)
-    return (-1);
-
-  if (argc == 2)
+  if (argc == 1)
     device = "/dev/video0";
   else
-    device = argv[2];
+    device = argv[1];
 
-  camera = open_device(device, WIDTH, HEIGHT, argv[1]);
+  camera = open_device(device, WIDTH, HEIGHT);
+  get_infos(get_server_ip(), camera);
+  init_device(camera);
+  start_camera(camera);
+
   printf("Detection:\n");
   last_time = 0;
   for (i = 0; i < 20; i++) {
-  //while(1) {
     camera_frame(camera);
     if (!i) {
       rgb = yuyv_to_rgb(camera->head.start, WIDTH, HEIGHT);

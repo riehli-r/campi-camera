@@ -47,8 +47,11 @@ SOCKADDR_IN             get_server_ip() {
   if (!buffer)
     exit_failure("malloc dgram buffer");
   recvfrom(sock, buffer, BUFF_SIZE, 0, (SOCKADDR*)&server_info, &size_sockaddr);
-  printf("One server found: \033[34m%s\033[0m\n", inet_ntoa(server_info.sin_addr));
-  printf("Server %s send: %s\n", inet_ntoa(server_info.sin_addr), buffer);
+  if (strcmp(buffer, "Hello back") == 0) {
+
+    printf("One server found: \033[34m%s\033[0m\n", inet_ntoa(server_info.sin_addr));
+    printf("Server %s send: %s\n", inet_ntoa(server_info.sin_addr), buffer);
+  }
   free(buffer);
   return (server_info);
 }

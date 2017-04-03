@@ -5,6 +5,7 @@ void                    start_camera(t_camera *camera) {
   size_t                i;
   struct v4l2_buffer    buf;
   enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+  int                   j;
 
   for (i = 0; i < camera->buffer_count; i++) {
     memset(&buf, 0, sizeof(buf));
@@ -17,4 +18,7 @@ void                    start_camera(t_camera *camera) {
 
   if (multi_ioctl(camera->fd, VIDIOC_STREAMON, &type) == -1)
     exit_failure("VIDIOC_STREAMON");
+
+  for (j = 0; j < INIT_FRAME; j++)
+    camera_frame(camera);
 }

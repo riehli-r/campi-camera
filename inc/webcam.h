@@ -35,8 +35,6 @@
 #define RETURN_ON_LMT   1
 #define CONTINUE_ON_LMT 0
 
-
-
 #define DISPLAY         1
 #define HIDE            0
 #define BUFF_SIZE       2048

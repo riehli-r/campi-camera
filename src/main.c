@@ -1,12 +1,12 @@
 #include "campi/webcam.h"
 
-int                 main(int argc, char **argv) {
+int                     main(int argc, char **argv) {
 
-  t_camera          *camera;
-  char              *device;
-  SOCKET            sock;
-  SOCKADDR_IN       sin;
-  int               ret;
+  t_camera              *camera;
+  char                  *device;
+  SOCKET                sock;
+  SOCKADDR_IN           sin;
+  int                   ret;
 
   if (argc < 3)
     device = "/dev/video0";
@@ -33,6 +33,7 @@ int                 main(int argc, char **argv) {
   start_camera(camera);
   //camera_loop(camera);
 
+  close(sock);
   stop_camera(camera);
   return (0);
 }

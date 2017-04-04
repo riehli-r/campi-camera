@@ -17,7 +17,10 @@
 #include <sys/types.h>
 #include <ifaddrs.h>
 
+#include <pthread.h>
 #include <jpeglib.h>
+
+#include <errno.h>
 
 #define DEFAULT_LABEL   "default_label"
 #define INIT_FRAME      10
@@ -55,6 +58,11 @@ typedef struct sockaddr SOCKADDR;
 typedef struct in_addr  IN_ADDR;
 
 typedef struct {
+  char                  *event;
+  void(*action)();
+}                       t_action;
+
+typedef struct {
 
   char                  *event;
   char                  *data;
@@ -77,6 +85,7 @@ typedef struct          s_camera {
 
   t_info                infos;
   int                   fd;
+  SOCKET                *sock;
   uint32_t              width;
   uint32_t              height;
   size_t                buffer_count;
@@ -84,6 +93,8 @@ typedef struct          s_camera {
   t_buffer              head;
   uint8_t               *prev;
   struct timeval        timeout;
+
+  pthread_mutex_t       mutex;
 }                       t_camera;
 
 typedef struct {
@@ -108,6 +119,8 @@ void                    reco(SOCKET sock, t_camera *camera);
 void                    reset_buffer(char *buffer);
 
 void                    set_label(t_camera* camera, char *buffer);
+void                    set_state(t_camera* camera, char *buffer);
+void                    set_precision(t_camera* camera, char *buffer);
 
 t_camera*               open_device(const char* dev, uint32_t width, uint32_t height);
 void                    capability_requests(t_camera *camera);

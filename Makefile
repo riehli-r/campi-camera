@@ -1,7 +1,7 @@
 CC 			= gcc
 CNAME 	= campi-camera
 CFLAGS 	= -Wall -Werror -Wpedantic -Wextra
-CLIBS		= -ljpeg
+CLIBS		= -ljpeg -lpthread
 
 SRCDIR	= src
 OBJDIR	= obj

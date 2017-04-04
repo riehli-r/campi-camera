@@ -25,6 +25,8 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
   camera->timeout.tv_sec = 1;
   camera->timeout.tv_usec = 0;
 
-  //set_label(camera, DEFAULT_LABEL);
+  pthread_mutex_init(&camera->mutex, NULL);
+
+  set_label(camera, "label#DEFAULT_LABEL");
   return (camera);
 }

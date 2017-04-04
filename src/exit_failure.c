@@ -2,6 +2,6 @@
 
 void                    exit_failure(const char *mesg) {
 
-  fprintf(stderr, "%s\n", mesg);
+  fprintf(stderr, "%s : %d\n", mesg, errno);
   exit(EXIT_FAILURE);
 }

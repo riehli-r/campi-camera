@@ -4,14 +4,31 @@ int                 main(int argc, char **argv) {
 
   t_camera          *camera;
   char              *device;
+  SOCKET            sock;
+  SOCKADDR_IN       sin;
+  int               ret;
 
-  if (argc == 1)
+  if (argc < 3)
     device = "/dev/video0";
   else
-    device = argv[1];
+    device = argv[2];
+
+  sin = get_server_ip();
+  STEP("Create TCP socket");
+  sin.sin_port = htons(STREAM_PORT);
+  sock = socket(AF_INET, SOCK_STREAM, 0);
+  if (sock == INVALID_SOCKET)
+    exit_failure("INVALID_SOCKET");
+  VALIDATE();
+
+  STEP("Connection to the server");
+  ret = connect(sock, (SOCKADDR*)&sin, sizeof(sin));
+  if (ret == SOCKET_ERROR)
+    exit_failure("connect");
+  VALIDATE();
 
   camera = open_device(device, WIDTH, HEIGHT);
-  get_infos(get_server_ip(), camera);
+  get_infos(sock, camera);
   init_device(camera);
   start_camera(camera);
   //camera_loop(camera);

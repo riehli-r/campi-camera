@@ -98,7 +98,7 @@ void                    exit_failure(const char *e);
 int                     multi_ioctl(int fd, unsigned long request, void* arg);
 
 SOCKADDR_IN             get_server_ip();
-void                    get_infos(SOCKADDR_IN sin, t_camera *camera);
+void                    get_infos(SOCKET sock, t_camera *camera);
 void                    save_id(char *id);
 char*                   get_id();
 void                    req_id(SOCKET sock, t_camera *camera);

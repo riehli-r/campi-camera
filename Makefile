@@ -25,19 +25,24 @@ $(OBJDIR)/%.o: %.c
 
 cp_inc:
 					+@[ -d $(SRCDIR)/campi ] || mkdir $(SRCDIR)/campi
-					@cp $(INCDIR)/*.h  $(SRCDIR)/campi/
+					cp $(INCDIR)/*.h  $(SRCDIR)/campi/
 
-rm_inc:
-					@$(RM) src/campi/
 
-$(CNAME): cp_inc $(OBJ) rm_inc
+$(CNAME): cp_inc $(OBJ)
 					+@ [ -d $(TARDIR) ] || mkdir $(TARDIR)
 					$(CC) $(OBJ) $(CFLAGS) $(CLIBS) -o $(TARDIR)/$(CNAME)
 
-clean:
-					@$(RM) $(OBJDIR)
 
-fclean: 	clean rm_inc
-					@$(RM) $(TARDIR)
+clean_data:
+					$(RM) $(DATADIR)
+
+clean_inc:
+					$(RM) src/campi/
+
+clean:		clean_inc
+					$(RM) $(OBJDIR)
+
+fclean: 	clean clean_data
+					$(RM) $(TARDIR)
 
 re: 			fclean all

@@ -9,9 +9,10 @@ void                    stop_camera(t_camera *camera) {
   if (multi_ioctl(camera->fd, VIDIOC_STREAMOFF, &type) == -1)
     exit_failure("VIDIOC_STREAMOFF");
 
-  for (i = 0; i < camera->buffer_count; i++) {
+  for (i = 0; i < camera->buffer_count; i++)
     munmap(camera->buffers[i].start, camera->buffers[i].length);
-  }
+  free(camera->infos.id);
+  free(camera->infos.label);
   free(camera->buffers);
   camera->buffer_count = 0;
   camera->buffers = NULL;

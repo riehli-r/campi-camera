@@ -35,7 +35,7 @@ SOCKADDR_IN             get_server_ip() {
       sin.sin_family = AF_INET;
       sin.sin_port = htons(DGRAM_PORT);
       buffer = "Hello Dude";
-      ret = sendto(sock, buffer, strlend(buffer), 0, (SOCKADDR*)&sin, sizeof(sin));
+      ret = sendto(sock, buffer, strlen(buffer), 0, (SOCKADDR*)&sin, sizeof(sin));
       if (ret == SEND_ERROR)
         exit_failure("SEND_TO");
     }

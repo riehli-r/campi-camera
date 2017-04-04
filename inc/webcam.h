@@ -35,6 +35,10 @@
 #define RETURN_ON_LMT   1
 #define CONTINUE_ON_LMT 0
 
+
+
+#define DISPLAY         1
+#define HIDE            0
 #define BUFF_SIZE       2048
 #define DGRAM_PORT      8082
 #define STREAM_PORT     8080
@@ -51,6 +55,13 @@ typedef int             SOCKET;
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
 typedef struct in_addr  IN_ADDR;
+
+typedef struct {
+
+  char                  *event;
+  char                  *data;
+  u_short               return_buffer;
+}                       t_req;
 
 typedef struct {
   char                  *id;
@@ -88,6 +99,17 @@ int                     multi_ioctl(int fd, unsigned long request, void* arg);
 
 SOCKADDR_IN             get_server_ip();
 void                    get_infos(SOCKADDR_IN sin, t_camera *camera);
+void                    save_id(char *id);
+char*                   get_id();
+void                    req_id(SOCKET sock, t_camera *camera);
+char*                   send_request(SOCKET sock, t_req request);
+int                     recv_request(SOCKET sock, char *buffer, short display);
+void                    delete_request(t_req req);
+t_req                   buff_to_request(char *buffer);
+void                    reco(SOCKET sock, t_camera *camera);
+void                    reset_buffer(char *buffer);
+
+void                    set_label(t_camera* camera, char *buffer);
 
 t_camera*               open_device(const char* dev, uint32_t width, uint32_t height);
 void                    capability_requests(t_camera *camera);
@@ -96,6 +118,7 @@ void                    format_request(t_camera *camera);
 void                    buffer_request(t_camera *camera);
 void                    init_device(t_camera *camera);
 void                    start_camera(t_camera *camera);
+void                    camera_loop(t_camera *camera);
 void                    stop_camera(t_camera *camera);
 int                     camera_capture(t_camera *camera);
 int                     camera_frame(t_camera* camera);

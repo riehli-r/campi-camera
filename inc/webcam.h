@@ -117,7 +117,8 @@ void                    delete_request(t_req req);
 t_req                   buff_to_request(char *buffer);
 void                    reco(SOCKET sock, t_camera *camera);
 void                    reset_buffer(char *buffer);
-
+void*                   listen_thread(void *camera);
+void                    (*get_action(char *buffer))(t_camera*, char*);
 void                    set_label(t_camera* camera, char *buffer);
 void                    set_state(t_camera* camera, char *buffer);
 void                    set_precision(t_camera* camera, char *buffer);

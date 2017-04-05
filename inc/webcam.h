@@ -96,6 +96,7 @@ typedef struct          s_camera {
   struct timeval        timeout;
 
   pthread_mutex_t       mutex;
+  pthread_cond_t        cond;
 }                       t_camera;
 
 typedef struct {
@@ -106,6 +107,8 @@ typedef struct {
 
 void                    exit_failure(const char *e);
 int                     multi_ioctl(int fd, unsigned long request, void* arg);
+int                     fsize(FILE *file);
+char*                   base64_encode(char *data, size_t input_length);
 
 SOCKADDR_IN             get_server_ip();
 void                    get_infos(SOCKET sock, t_camera *camera);
@@ -131,7 +134,7 @@ void                    format_request(t_camera *camera);
 void                    buffer_request(t_camera *camera);
 void                    init_device(t_camera *camera);
 void                    start_camera(t_camera *camera);
-void                    camera_loop(t_camera *camera);
+void                    camera_loop(t_camera *camera, SOCKET sock);
 void                    stop_camera(t_camera *camera);
 int                     camera_capture(t_camera *camera);
 int                     camera_frame(t_camera* camera);

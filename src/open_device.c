@@ -27,6 +27,7 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
   camera->is_sending = 0;
 
   pthread_mutex_init(&camera->mutex, NULL);
+  pthread_cond_init(&camera->cond, NULL);
 
   set_label(camera, "label#DEFAULT_LABEL");
   return (camera);

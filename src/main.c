@@ -37,7 +37,7 @@ int                     main(int argc, char **argv) {
   if(pthread_create(&thread, NULL, listen_thread, camera) == -1)
     exit_failure("pthread_create");
 
-  camera_loop(camera);
+  camera_loop(camera, sock);
 
   if (pthread_join(thread, NULL))
     exit_failure("pthread_join");

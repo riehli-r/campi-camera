@@ -42,4 +42,6 @@ void                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint32_
   for (size_t i = 0; i < height; i++)
     free(image[i]);
   free(image);
+
+  fclose(dest);
 }

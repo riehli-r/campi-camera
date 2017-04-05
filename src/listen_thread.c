@@ -10,12 +10,14 @@ void*                    listen_thread(void *camera) {
   printf("Start of listen thread\n");
   buffer = malloc(BUFF_SIZE);
   while (1) {
-    pthread_mutex_lock(&tmp->mutex);
-    recv_request(*tmp->sock, buffer, DISPLAY);
-    action = get_action(buffer);
-    if (action)
-      action(tmp, buffer);
-    pthread_mutex_unlock(&tmp->mutex);
+    if (!tmp->is_sending) {
+      pthread_mutex_lock(&tmp->mutex);
+      recv_request(*tmp->sock, buffer, DISPLAY);
+      action = get_action(buffer);
+      if (action)
+        action(tmp, buffer);
+      pthread_mutex_unlock(&tmp->mutex);
+    }
   }
 
   return (NULL);

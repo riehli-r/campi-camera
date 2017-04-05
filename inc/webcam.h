@@ -40,7 +40,7 @@
 
 #define DISPLAY         1
 #define HIDE            0
-#define BUFF_SIZE       2048
+#define BUFF_SIZE       1200
 #define DGRAM_PORT      8082
 #define STREAM_PORT     8080
 #define INVALID_SOCKET  -1
@@ -92,6 +92,7 @@ typedef struct          s_camera {
   t_buffer              *buffers;
   t_buffer              head;
   uint8_t               *prev;
+  u_short               is_sending;
   struct timeval        timeout;
 
   pthread_mutex_t       mutex;

@@ -24,6 +24,7 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
   camera->head.start = NULL;
   camera->timeout.tv_sec = 1;
   camera->timeout.tv_usec = 0;
+  camera->is_sending = 0;
 
   pthread_mutex_init(&camera->mutex, NULL);
 

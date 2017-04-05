@@ -14,7 +14,7 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
   camera->infos.id = get_id();
   camera->infos.label = calloc(100, sizeof(char));
   camera->infos.state = 1;
-  camera->infos.precision = PIXEL_DIFF;
+  camera->infos.precision = 2.5;
   camera->fd = fd;
   camera->width = width;
   camera->height = height;

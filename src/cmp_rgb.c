@@ -1,6 +1,6 @@
 #include "campi/webcam.h"
 
-int                  cmp_rgb(uint8_t *rgb1, uint8_t *rgb2, uint32_t width, uint32_t height, short limit) {
+int                  cmp_rgb(uint8_t *rgb1, uint8_t *rgb2, uint32_t width, uint32_t height, short limit, float precision) {
 
    uint32_t          i;
    t_color           color1;
@@ -14,7 +14,7 @@ int                  cmp_rgb(uint8_t *rgb1, uint8_t *rgb2, uint32_t width, uint3
      if (cmp_color(color1, color2)) {
       diff++;
      }
-     if (diff >= PIXEL_DIFF && limit) {
+     if (diff >= precision && limit) {
        return (diff);
      }
    }

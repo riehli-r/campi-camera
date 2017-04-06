@@ -26,8 +26,7 @@ void                    camera_loop(t_camera *camera, SOCKET sock) {
       if ((diff * 100) /  (width * height) >= camera->infos.precision) {
         printf("precision: %f\n", camera->infos.precision);
         printf("Move: %ld || %f\n", time(NULL), (diff * 100.f) /  (width * height));
-        save_current_jpeg(rgb, width, height);
-        send_image(time(NULL), sock, camera);
+        send_image(save_current_jpeg(rgb, width, height), sock, camera);
       }
       memcpy(camera->prev, rgb, width * height * 3);
       last_time = time(NULL);

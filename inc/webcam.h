@@ -48,6 +48,8 @@
 typedef int             SOCKET;
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
+typedef unsigned short  u_short;
+
 
 typedef struct {
   char                  *event;
@@ -125,7 +127,7 @@ void                    stop_camera(t_camera *camera);
 int                     camera_capture(t_camera *camera);
 int                     camera_frame(t_camera* camera);
 void                    write_jpeg_file(int out, t_camera *camera);
-void                    save_current_jpeg(uint8_t* rgb, uint32_t width, uint32_t height);
+time_t                  save_current_jpeg(uint8_t* rgb, uint32_t width, uint32_t height);
 
 /** ================= MOVEMENTS ================= **/
 void                    set_color(uint8_t *rgb, t_color *color);

@@ -1,6 +1,6 @@
 #include "request.h"
 
-int                     recv_request(SOCKET sock, char *buffer, short display) {
+int                     recv_request(int sock, char *buffer, short display) {
 
   int                   ret;
 

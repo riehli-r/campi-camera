@@ -3,5 +3,6 @@
 photos/
 bin/
 obj/
-lib
+lib/
+data/
 src/campi

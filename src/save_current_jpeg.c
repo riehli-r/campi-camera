@@ -1,6 +1,6 @@
 #include "campi/webcam.h"
 
-void                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint32_t height)
+time_t                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint32_t height)
 {
   char                  filename[20];
   FILE                  *dest;
@@ -10,9 +10,11 @@ void                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint32_
   size_t                i;
   size_t                j;
   uint8_t               *rgb;
+  time_t                current_time;
 
+  current_time = time(NULL);
   rgb = yuyv;
-  sprintf(filename, "photos/%ld.jpg", time(NULL));
+  sprintf(filename, "photos/%ld.jpg", current_time);
   dest = fopen(filename, "w");
   image = calloc(height, sizeof (JSAMPROW));
   for (i = 0; i < height; i++) {
@@ -44,4 +46,5 @@ void                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint32_
   free(image);
 
   fclose(dest);
+  return (current_time);
 }

@@ -1,5 +1,5 @@
 #include "request.h"
-char*                    send_request(SOCKET sock, t_req request) {
+char*                    send_request(int sock, t_req request) {
 
   char                   *buffer;
   int                    ret;

@@ -7,7 +7,7 @@ LIBDIR	=	lib
 
 CC 			= gcc
 CNAME 	= campi-camera
-CFLAGS 	= -Wall -Werror -Wpedantic -Wextra
+CFLAGS 	= -std=c11 -Wall -Werror -Wpedantic -Wextra
 CLIBS		= -ljpeg -lpthread
 CULIBS	=	$(LIBDIR)/request-$(shell uname -p)-$(shell uname -r).a
 

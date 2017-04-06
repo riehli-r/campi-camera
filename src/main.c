@@ -10,7 +10,7 @@ int                     main(int argc, char **argv) {
   int                   ret;
 
   if (argc < 3) {
-    device = "/dev/video1";
+    device = "/dev/video0";
     sin = get_server_ip();
   }
   else {

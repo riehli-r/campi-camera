@@ -54,6 +54,7 @@ clean_inc:
 
 clean:		clean_inc
 					$(RM) $(OBJDIR)
+					$(RM) $(SRCDIR)/request/*.o
 
 fclean: 	clean clean_data clean_lib
 					$(RM) $(TARDIR)

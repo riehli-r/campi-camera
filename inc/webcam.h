@@ -123,6 +123,8 @@ void                    set_label(t_camera* camera, char *buffer);
 void                    set_state(t_camera* camera, char *buffer);
 void                    set_precision(t_camera* camera, char *buffer);
 void                    send_image(time_t timestamp, SOCKET sock, t_camera *camera);
+void                    send_frame(SOCKET sock, t_buffer head);
+void                    stream_video(t_camera *camera);
 
 /** ================= CAMERA FUNCTIONS ================= **/
 t_camera*               open_device(const char* dev, uint32_t width, uint32_t height);

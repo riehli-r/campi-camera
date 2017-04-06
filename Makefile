@@ -73,9 +73,12 @@ install:
 					cp bin/campi-camera /home/campie_camera/
 					cp webcam.service /etc/systemd/system/webcam.service
 					systemctl daemon-reload
+					systemctl enable webcam
+					systemctl daemon-reload
 
 uninstall:
 					service webcam stop
+					systemctl disable webcam
 					rm /etc/systemd/system/webcam.service
 				 	userdel campie_camera
 					rm -r /home/campie_camera

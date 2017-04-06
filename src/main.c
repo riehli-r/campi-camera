@@ -9,12 +9,16 @@ int                     main(int argc, char **argv) {
   SOCKADDR_IN           sin;
   int                   ret;
 
-  if (argc < 3)
+  if (argc < 3) {
     device = "/dev/video1";
-  else
+    sin = get_server_ip();
+  }
+  else {
+    sin.sin_addr.s_addr = inet_addr(argv[1]);
+    sin.sin_family = AF_INET;
     device = argv[2];
+  }
 
-  sin = get_server_ip();
   STEP("Create TCP socket");
   sin.sin_port = htons(STREAM_PORT);
   sock = socket(AF_INET, SOCK_STREAM, 0);

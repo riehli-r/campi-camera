@@ -1,9 +1,9 @@
 #include "campi/webcam.h"
 
-void                send_image(time_t timestamp, SOCKET sock, t_camera *camera) {
+void                send_image(char *filename, SOCKET sock, t_camera *camera) {
 
   FILE              *file;
-  char              pathname[20];
+  char              pathname[100];
   int               filesize;
   char              *image;
   char              *base64;
@@ -11,8 +11,8 @@ void                send_image(time_t timestamp, SOCKET sock, t_camera *camera) 
   size_t            i;
   size_t            base64size;
 
-  memset(pathname, '\0', 20);
-  sprintf(pathname, "photos/%ld.jpg", timestamp);
+  memset(pathname, '\0', 100);
+  sprintf(pathname, "/home/campie_camera/photos/%s.jpg", filename);
   file = fopen(pathname, "r");
   if (file) {
     filesize = fsize(file);
@@ -45,4 +45,5 @@ void                send_image(time_t timestamp, SOCKET sock, t_camera *camera) 
     free(base64);
     fclose(file);
   }
+  camera->take_picture = 0;
 }

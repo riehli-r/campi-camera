@@ -1,0 +1,10 @@
+[Unit]
+Description=CamPi's camera
+
+[Service]
+Type=simple
+RemainAfterExit=no
+ExecStart=/home/campie_camera/campi-camera
+
+User=riehli_r
+Group=riehli_r

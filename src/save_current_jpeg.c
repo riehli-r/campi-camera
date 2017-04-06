@@ -1,8 +1,8 @@
 #include "campi/webcam.h"
 
-time_t                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint32_t height)
+char*                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint32_t height, char *filename)
 {
-  char                  filename[20];
+  char                  *pathname;
   FILE                  *dest;
   JSAMPARRAY            image;
   struct                jpeg_compress_struct compress;
@@ -10,12 +10,13 @@ time_t                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint3
   size_t                i;
   size_t                j;
   uint8_t               *rgb;
-  time_t                current_time;
 
-  current_time = time(NULL);
   rgb = yuyv;
-  sprintf(filename, "photos/%ld.jpg", current_time);
-  dest = fopen(filename, "w");
+  pathname = calloc(100, sizeof(char));
+  sprintf(pathname, "/home/campie_camera/photos/%s.jpg", filename);
+  printf("%s\n", pathname);
+  dest = fopen(pathname, "w");
+  free(pathname);
   image = calloc(height, sizeof (JSAMPROW));
   for (i = 0; i < height; i++) {
     image[i] = calloc(width * 3, sizeof (JSAMPLE));
@@ -46,5 +47,5 @@ time_t                    save_current_jpeg(uint8_t* yuyv, uint32_t width, uint3
   free(image);
 
   fclose(dest);
-  return (current_time);
+  return (filename);
 }

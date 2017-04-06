@@ -18,7 +18,7 @@ void*                    listen_thread(void *camera) {
       pthread_cond_wait(&tmp->cond, &tmp->mutex);
       tmp->is_sending = 0;
     }
-    recv_request(sock, buffer, HIDE);
+    recv_request(sock, buffer, DISPLAY);
     action = get_action(buffer);
     if (action)
       action(tmp, buffer);

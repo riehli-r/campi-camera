@@ -5,10 +5,11 @@ char*                   get_id() {
   FILE                  *file;
   char                  *id;
 
-  file = fopen("data/id", "r");
+  file = fopen("/home/campie_camera/data/id", "r");
   id = calloc(36 + 1, sizeof(char));
-  if (file == NULL) {
-    printf("Cannot open file\n");
+  if (!file) {
+    printf("Cannot open id file\n");
+    memcpy(id, "NOID", 4);
     return (id);
   }
   fscanf(file, "%s", id);

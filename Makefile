@@ -59,3 +59,23 @@ fclean: 	clean clean_data clean_lib
 					$(RM) $(TARDIR)
 
 re: 			fclean all
+
+
+# ======================== INSTALL ======================== #
+install:
+					adduser campie_camera --disabled-password --disabled-login --gecos d
+					mkdir /home/campie_camera/photos
+					chmod 777 /home/campie_camera/photos
+					chown campie_camera /home/campie_camera/photos
+					mkdir /home/campie_camera/data
+					chmod 777 /home/campie_camera/data
+					chown campie_camera /home/campie_camera/data
+					cp bin/campi-camera /home/campie_camera/
+					cp webcam.service /etc/systemd/system/webcam.service
+					systemctl daemon-reload
+
+uninstall:
+					service webcam stop
+					rm /etc/systemd/system/webcam.service
+				 	userdel campie_camera
+					rm -r /home/campie_camera

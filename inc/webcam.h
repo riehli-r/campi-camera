@@ -81,6 +81,7 @@ typedef struct          s_camera {
   t_buffer              head;
   uint8_t               *prev;
   u_short               is_sending;
+  u_short               take_picture;
   struct timeval        timeout;
   pthread_mutex_t       mutex;
   pthread_cond_t        cond;
@@ -111,7 +112,7 @@ void                    (*get_action(char *buffer))(t_camera*, char*);
 void                    set_label(t_camera* camera, char *buffer);
 void                    set_state(t_camera* camera, char *buffer);
 void                    set_precision(t_camera* camera, char *buffer);
-void                    send_image(time_t timestamp, SOCKET sock, t_camera *camera);
+void                    send_image(char* filename, SOCKET sock, t_camera *camera);
 void                    send_frame(SOCKET sock, t_buffer head);
 void                    stream_video(t_camera *camera);
 
@@ -122,12 +123,13 @@ void                    format_request(t_camera *camera);
 void                    buffer_request(t_camera *camera);
 void                    init_device(t_camera *camera);
 void                    start_camera(t_camera *camera);
-void                    camera_loop(t_camera *camera, SOCKET sock);
 void                    stop_camera(t_camera *camera);
+void                    camera_loop(t_camera *camera, SOCKET sock);
 int                     camera_capture(t_camera *camera);
 int                     camera_frame(t_camera* camera);
 void                    write_jpeg_file(int out, t_camera *camera);
-time_t                  save_current_jpeg(uint8_t* rgb, uint32_t width, uint32_t height);
+char*                   save_current_jpeg(uint8_t* rgb, uint32_t width, uint32_t height, char *filename);
+void                    take_picture(t_camera *camera, char *buffer);
 
 /** ================= MOVEMENTS ================= **/
 void                    set_color(uint8_t *rgb, t_color *color);

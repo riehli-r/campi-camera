@@ -1,4 +1,5 @@
 #include "campi/webcam.h"
+#include "campi/request.h"
 
 void                    set_label(t_camera* camera, char *buffer) {
 

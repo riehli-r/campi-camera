@@ -34,8 +34,6 @@
 
 #define RETURN_ON_LMT   1
 #define CONTINUE_ON_LMT 0
-#define DISPLAY         1
-#define HIDE            0
 #define BUFF_SIZE       1200
 #define DGRAM_PORT      8082
 #define STREAM_PORT     8080
@@ -55,12 +53,6 @@ typedef struct {
   char                  *event;
   void                  (*action)();
 }                       t_action;
-
-typedef struct {
-  char                  *event;
-  char                  *data;
-  u_short               return_buffer;
-}                       t_req;
 
 typedef struct {
   char                  *id;
@@ -88,7 +80,6 @@ typedef struct          s_camera {
   uint8_t               *prev;
   u_short               is_sending;
   struct timeval        timeout;
-
   pthread_mutex_t       mutex;
   pthread_cond_t        cond;
 }                       t_camera;
@@ -111,10 +102,6 @@ void                    get_infos(SOCKET sock, t_camera *camera);
 void                    save_id(char *id);
 char*                   get_id();
 void                    req_id(SOCKET sock, t_camera *camera);
-char*                   send_request(SOCKET sock, t_req request);
-int                     recv_request(SOCKET sock, char *buffer, short display);
-void                    delete_request(t_req req);
-t_req                   buff_to_request(char *buffer);
 void                    reco(SOCKET sock, t_camera *camera);
 void                    reset_buffer(char *buffer);
 void*                   listen_thread(void *camera);

@@ -1,5 +1,7 @@
 *.o
+*.a
 photos/
 bin/
 obj/
+lib
 src/campi

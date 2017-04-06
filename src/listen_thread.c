@@ -1,4 +1,5 @@
 #include "campi/webcam.h"
+#include "campi/request.h"
 
 void*                    listen_thread(void *camera) {
 

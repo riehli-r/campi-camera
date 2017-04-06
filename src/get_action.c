@@ -1,4 +1,5 @@
 #include "campi/webcam.h"
+#include "campi/request.h"
 
 void                  (*get_action(char *buffer))(t_camera*, char*) {
 

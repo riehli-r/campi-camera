@@ -1,4 +1,5 @@
 #include "campi/webcam.h"
+#include "campi/request.h"
 
 void                    req_id(SOCKET sock, t_camera *camera) {
 

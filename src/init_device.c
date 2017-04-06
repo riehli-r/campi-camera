@@ -11,7 +11,6 @@ void                     capability_requests(t_camera *camera) {
     exit_failure("V4L2_CAP_VIDEO_CAPTURE");
   if (!(cap.capabilities & V4L2_CAP_STREAMING))
     exit_failure("V4L2_CAP_STREAMING");
-  printf("Driver: %s\n", (char*)cap.driver);
   printf("Camera name: %s\n", (char*)cap.card);
 }
 
@@ -21,9 +20,18 @@ void                     format_request(t_camera *camera) {
 
   memset(&format, 0, sizeof format);
   format.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-  format.fmt.pix.width = camera->width;
-  format.fmt.pix.height = camera->height;
-  format.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
+  if (!camera->infos.stream) {
+    format.fmt.pix.width = camera->width;
+    format.fmt.pix.height = camera->height;
+    format.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
+  }
+  else {
+
+    printf("Stream\n");
+    format.fmt.pix.width = 640;
+    format.fmt.pix.height = 480;
+    format.fmt.pix.pixelformat = V4L2_PIX_FMT_MJPEG;
+  }
   format.fmt.pix.field = V4L2_FIELD_NONE;
   if (multi_ioctl(camera->fd, VIDIOC_S_FMT, &format) == -1)
     exit_failure("VIDIOC_S_FMT");
@@ -69,5 +77,5 @@ void                     init_device(t_camera *camera) {
       exit_failure("mmap error");
   }
   camera->head.start = malloc(buf_max);
-  camera->prev = malloc(WIDTH * HEIGHT * 3);
+  camera->prev = malloc(camera->width * camera->height * 3);
 }

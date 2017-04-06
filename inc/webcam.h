@@ -24,8 +24,6 @@
 
 #define DEFAULT_LABEL   "default_label"
 #define INIT_FRAME      10
-#define WIDTH           1280
-#define HEIGHT          720
 #define RGB_DIFF        20
 
 #define RGB_MAX         255
@@ -45,7 +43,6 @@
 #define SOCKET_ERROR    -1
 #define SEND_ERROR      -1
 #define RECV_ERROR      -1
-#define strlend(s)      strlen(s) + 1
 
 #define STEP(s)         printf("%s:", s);
 #define VALIDATE()      printf("\033[32mOK\033[0m\n");
@@ -53,15 +50,13 @@
 typedef int             SOCKET;
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
-typedef struct in_addr  IN_ADDR;
 
 typedef struct {
   char                  *event;
-  void(*action)();
+  void                  (*action)();
 }                       t_action;
 
 typedef struct {
-
   char                  *event;
   char                  *data;
   u_short               return_buffer;
@@ -72,6 +67,7 @@ typedef struct {
   char                  *label;
   unsigned short        state;
   float                 precision;
+  unsigned short        stream;
 }                       t_info;
 
 typedef struct          s_buffer {

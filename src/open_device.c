@@ -7,7 +7,7 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
 
   fd = open(dev, O_RDWR | O_NONBLOCK, 0);
   if (fd == -1)
-    exit_failure("fopen error");
+    exit_failure("ffopen error");
   camera = malloc(sizeof(t_camera));
   if (!camera)
     exit_failure("camera malloc error");
@@ -15,6 +15,7 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
   camera->infos.label = calloc(100, sizeof(char));
   camera->infos.state = 1;
   camera->infos.precision = 2.5;
+  camera->infos.stream = 0;
   camera->fd = fd;
   camera->width = width;
   camera->height = height;

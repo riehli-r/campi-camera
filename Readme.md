@@ -2,18 +2,7 @@ CamPi caméra
 ============
 
 
-<= req#id
-=> label#{LABEL}
-=> state#{STATE}
-=> precision#{PRECISION}
-
-
-<= reco#id
-=> label#
-=> state
-=> precision
-
-
-<= frame#{FRAME}
-
-<= image#{FRAME}
+sudo apt-get install libjpeg-dev
+make
+REMPLACER LE USER ET LE GROUPE PAR LE VOTRE DANS LE FICHIER webcam.service
+sudo make install

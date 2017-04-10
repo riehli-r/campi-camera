@@ -38,6 +38,7 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
   add_callback(&camera->cl, "set-label", &set_label);
   add_callback(&camera->cl, "set-state", &set_state);
   add_callback(&camera->cl, "set-precision", &set_precision);
+  add_callback(&camera->cl, "take_picture", &take_picture);
 
   set_label(camera, "label#DEFAULT_LABEL");
   return (camera);

@@ -131,7 +131,7 @@ int                     camera_capture(t_camera *camera);
 int                     camera_frame(t_camera* camera);
 void                    write_jpeg_file(int out, t_camera *camera);
 char*                   save_current_jpeg(uint8_t* rgb, uint32_t width, uint32_t height, char *filename);
-void                    take_picture(t_camera *camera, char *buffer);
+void                    take_picture(void *camera, char *data);
 
 /** ================= MOVEMENTS ================= **/
 void                    set_color(uint8_t *rgb, t_color *color);

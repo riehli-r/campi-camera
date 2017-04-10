@@ -19,20 +19,18 @@ void                    set_label(void* camera, char *data) {
     memcpy(tmp->infos.label, data, strlen(data));
 }
 
-void                    set_state(t_camera* camera, char *buffer) {
+void                    set_state(void* camera, char *data) {
 
-  rq_req                 req;
+  t_camera              *tmp;
 
-  req = buff_to_request(buffer);
-  camera->infos.state = !strcmp(req.data, "1");
-  delete_request(req);
+  tmp = (t_camera*)camera;
+  tmp->infos.state = !strcmp(data, "1");
 }
 
-void                    set_precision(t_camera* camera, char *buffer) {
+void                    set_precision(void* camera, char *data) {
 
-  rq_req                 req;
+  t_camera              *tmp;
 
-  req = buff_to_request(buffer);
-  camera->infos.precision = (float)atof(req.data);
-  delete_request(req);
+  tmp = (t_camera*)camera;
+  tmp->infos.precision = (float)atof(data);
 }

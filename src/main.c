@@ -36,8 +36,11 @@ int                     main(int argc, char **argv) {
   camera->sock = &sock;
   camera->cl = client(&sock, 1);
   camera->cl.param = camera;
+
   add_callback(&camera->cl, "id", &set_id);
-  add_callback(&camera->cl, "label", &set_label);
+  add_callback(&camera->cl, "set-label", &set_label);
+  add_callback(&camera->cl, "set-state", &set_state);
+  add_callback(&camera->cl, "set-precision", &set_precision);
 
   get_infos(sock, camera);
   init_device(camera);
@@ -46,7 +49,6 @@ int                     main(int argc, char **argv) {
   if(pthread_create(&thread, NULL, listen_thread, camera) == -1)
     exit_failure("pthread_create");
 
-  //  stream_video(camera);
    camera_loop(camera, sock);
 
   if (pthread_join(thread, NULL))

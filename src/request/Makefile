@@ -1,11 +1,19 @@
 CC			= gcc
 CNAME		=	request-$(shell uname -p)-$(shell uname -r).a
-CFLAGS	=	-Wall -Werror -Wextra -Wpedantic
-SRC     = buff_to_request.c \
+CFLAGS	=	-std=c11 -Wall -Werror -Wextra -Wpedantic
+SRC     = add_callback.c		\
+					buff_to_request.c \
+					btorq.c						\
+					data_to_buffer.c	\
+					delete_client.c		\
 					delete_request.c	\
 					flush.c						\
+					get_callback.c		\
 					recv_request.c		\
-					send_request.c
+					recv_rq.c					\
+					rq_client.c				\
+					send_request.c		\
+					send_rq.c
 
 RM			= rm -rf
 AR			=	ar r

@@ -22,6 +22,8 @@
 
 #include <errno.h>
 
+#include "request.h"
+
 #define DEFAULT_LABEL   "default_label"
 #define INIT_FRAME      10
 #define RGB_DIFF        20
@@ -85,6 +87,7 @@ typedef struct          s_camera {
   struct timeval        timeout;
   pthread_mutex_t       mutex;
   pthread_cond_t        cond;
+  rq_client             cl;
 }                       t_camera;
 
 typedef struct {
@@ -109,6 +112,7 @@ void                    reco(SOCKET sock, t_camera *camera);
 void                    reset_buffer(char *buffer);
 void*                   listen_thread(void *camera);
 void                    (*get_action(char *buffer))(t_camera*, char*);
+void                    set_id(void* camera, char *data);
 void                    set_label(t_camera* camera, char *buffer);
 void                    set_state(t_camera* camera, char *buffer);
 void                    set_precision(t_camera* camera, char *buffer);
@@ -119,7 +123,7 @@ void                    stream_video(t_camera *camera);
 /** ================= CAMERA FUNCTIONS ================= **/
 t_camera*               open_device(const char* dev, uint32_t width, uint32_t height);
 void                    capability_requests(t_camera *camera);
-void                    format_request(t_camera *camera);
+void                    formarq_request(t_camera *camera);
 void                    buffer_request(t_camera *camera);
 void                    init_device(t_camera *camera);
 void                    start_camera(t_camera *camera);

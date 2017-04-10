@@ -20,6 +20,7 @@ void                    stop_camera(t_camera *camera) {
   camera->head.length = 0;
   camera->head.start = NULL;
   free(camera->prev);
+  delete_client(&camera->cl);
 
   if (close(camera->fd) == -1)
     exit_failure("Close file");

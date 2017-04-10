@@ -1,9 +1,19 @@
 #include "campi/webcam.h"
 #include "campi/request.h"
 
+
+void                    set_id(void* camera, char *data) {
+
+  t_camera              *tmp;
+
+  tmp = (t_camera*)camera;
+  memcpy(tmp->infos.id, data, strlen(data));
+  save_id(tmp->infos.id);
+}
+
 void                    set_label(t_camera* camera, char *buffer) {
 
-  t_req                 req;
+  rq_req                 req;
 
   req = buff_to_request(buffer);
   if (camera->infos.label)
@@ -13,7 +23,7 @@ void                    set_label(t_camera* camera, char *buffer) {
 
 void                    set_state(t_camera* camera, char *buffer) {
 
-  t_req                 req;
+  rq_req                 req;
 
   req = buff_to_request(buffer);
   camera->infos.state = !strcmp(req.data, "1");
@@ -22,7 +32,7 @@ void                    set_state(t_camera* camera, char *buffer) {
 
 void                    set_precision(t_camera* camera, char *buffer) {
 
-  t_req                 req;
+  rq_req                 req;
 
   req = buff_to_request(buffer);
   camera->infos.precision = (float)atof(req.data);

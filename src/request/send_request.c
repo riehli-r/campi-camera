@@ -1,13 +1,14 @@
 #include "request.h"
-char*                    send_request(int sock, t_req request) {
+
+char*                    send_request(int sock, rq_req req) {
 
   char                   *buffer;
   int                    ret;
 
   buffer = calloc(BUFF_SIZE, sizeof(char));
-  strcat(buffer, request.event);
+  strcat(buffer, req.event);
   strcat(buffer, "#");
-  strcat(buffer, request.data);
+  strcat(buffer, req.data);
   ret = send(sock, buffer, strlen(buffer), 0);
   if (ret == SEND_ERROR)
     exit(-1);
@@ -15,7 +16,7 @@ char*                    send_request(int sock, t_req request) {
   ret = recv(sock, buffer, BUFF_SIZE, 0);
   if (ret == RECV_ERROR)
     exit(-1);
-  if (!request.return_buffer)
+  if (!req.return_buffer)
     free(buffer);
   return (buffer);
 }

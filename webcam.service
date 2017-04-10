@@ -7,8 +7,8 @@ RemainAfterExit=no
 ExecStart=/home/campie_camera/campi-camera
 Restart=on-failure
 RestartSec=10
-User=pi
-Group=pi
+User=riehli_r
+Group=riehli_r
 
 [Install]
 WantedBy=multi-user.target

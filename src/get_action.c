@@ -11,7 +11,7 @@ void                  take_picture(t_camera *camera, char *buffer) {
 void                  (*get_action(char *buffer))(t_camera*, char*) {
 
   t_action            actions[4];
-  t_req               req;
+  rq_req               req;
   int                 i;
 
   req = buff_to_request(buffer);

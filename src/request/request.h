@@ -19,14 +19,44 @@
 
 typedef struct {
   char                  *event;
-  char                  *data;
-  u_short               return_buffer;
-}                       t_req;
+  void                  (*callback)();
+}                       rq_callback;
 
-char*                   send_request(int sock, t_req request);
+typedef struct {
+  char                  *data;
+  int                   length;
+}                       rq_buffer;
+
+typedef struct {
+
+  int                   sock;
+  unsigned short        display;
+  rq_buffer             buffer;
+  rq_callback           *callbacks;
+  unsigned int          nbr_callback;
+  void                  *param;
+
+}                       rq_client;
+
+typedef struct {
+  char                  *event;
+  char                  *data;
+  unsigned short        return_buffer;
+}                       rq_req;
+
+void                    add_callback(rq_client *client, char *event, void(*callback)());
+void                    get_callback(rq_client *client, rq_req *req);
+rq_client               client(int *sock, unsigned short display);
+char*                   send_request(int sock, rq_req request);
 int                     recv_request(int sock, char *buffer, short display);
-void                    delete_request(t_req req);
-t_req                   buff_to_request(char *buffer);
+void                    delete_request(rq_req req);
+rq_req                  btorq(rq_buffer *buffer);
+rq_buffer*              data_to_buffer(char *data, unsigned int length);
+rq_req                  buff_to_request(char *buffer);
 void                    flush(char *str);
+rq_req                  recv_rq(rq_client *client, unsigned short free_req);
+rq_req                  send_rq(rq_client *client, rq_req req);
+void                    delete_client(rq_client *client);
+void                    add_callback(rq_client *client, char *event, void(*callback)());
 
 #endif

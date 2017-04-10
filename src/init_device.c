@@ -14,7 +14,7 @@ void                     capability_requests(t_camera *camera) {
   printf("Camera name: %s\n", (char*)cap.card);
 }
 
-void                     format_request(t_camera *camera) {
+void                     formarq_request(t_camera *camera) {
 
   struct v4l2_format     format;
 
@@ -57,7 +57,7 @@ void                     init_device(t_camera *camera) {
   size_t                 i;
 
   capability_requests(camera);
-  format_request(camera);
+  formarq_request(camera);
   buffer_request(camera);
 
   buf_max = 0;

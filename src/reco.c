@@ -6,7 +6,7 @@ void                    reco(SOCKET sock, t_camera *camera) {
   char                  *buffer;
 
   printf("Tentative de reco avec id: %s\n", camera->infos.id);
-  buffer = send_request(sock, (t_req) {.event = "reco", .data = camera->infos.id, .return_buffer = 1});
+  buffer = send_request(sock, (rq_req) {.event = "reco", .data = camera->infos.id, .return_buffer = 1});
   if (!strcmp(buffer, "reco#err")) {
     printf("Invalid ID\n");
     req_id(sock, camera);

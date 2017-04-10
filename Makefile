@@ -17,7 +17,6 @@ OBJ 		= $(patsubst %.c, $(OBJDIR)/%.o, $(SRC))
 RM 			= rm -rf
 
 all: 			$(CNAME)
-					+@[ -d $(DATADIR) ] || mkdir $(DATADIR)
 
 $(OBJDIR)/%.o: %.c
 	  			+@[ -d $(OBJDIR) ] || mkdir $(OBJDIR)
@@ -46,9 +45,6 @@ clean_lib:
 					$(RM) $(LIBDIR)
 					$(MAKE) -C $(SRCDIR)/request fclean
 
-clean_data:
-					$(RM) $(DATADIR)
-
 clean_inc:
 					$(RM) src/campi/
 
@@ -56,7 +52,7 @@ clean:		clean_inc
 					$(RM) $(OBJDIR)
 					$(RM) $(SRCDIR)/request/*.o
 
-fclean: 	clean clean_data clean_lib
+fclean: 	clean clean_lib
 					$(RM) $(TARDIR)
 
 re: 			fclean all
@@ -68,18 +64,18 @@ install:
 					mkdir /home/campie_camera/photos
 					chmod 777 /home/campie_camera/photos
 					chown campie_camera /home/campie_camera/photos
-					mkdir /home/campie_camera/data
-					chmod 777 /home/campie_camera/data
-					chown campie_camera /home/campie_camera/data
+					mkdir /home/campie_camera/$(DATADIR)
+					chmod 777 /home/campie_camera/$(DATADIR)
+					chown campie_camera /home/campie_camera/$(DATADIR)
 					cp bin/campi-camera /home/campie_camera/
-					cp webcam.service /etc/systemd/system/webcam.service
+					cp campi-camera.service /etc/systemd/system/campi-camera.service
 					systemctl daemon-reload
-					systemctl enable webcam
+					systemctl enable campi-camera
 					systemctl daemon-reload
 
 uninstall:
-					service webcam stop
-					systemctl disable webcam
-					rm /etc/systemd/system/webcam.service
+					service campi-camera stop
+					systemctl disable campi-camera
+					rm /etc/systemd/system/campi-camera.service
 				 	userdel campie_camera
 					rm -r /home/campie_camera

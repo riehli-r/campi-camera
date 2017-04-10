@@ -1,6 +1,6 @@
 #include "campi/webcam.h"
 
-t_camera*                  open_device(const char *dev, uint32_t width, uint32_t height) {
+t_camera*                  open_device(const char *dev, uint32_t width, uint32_t height, SOCKET sock) {
 
   int                      fd;
   t_camera                 *camera;
@@ -29,6 +29,15 @@ t_camera*                  open_device(const char *dev, uint32_t width, uint32_t
   camera->take_picture = 0;
   pthread_mutex_init(&camera->mutex, NULL);
   pthread_cond_init(&camera->cond, NULL);
+
+  camera->sock = &sock;
+  camera->cl = client(&sock, 1);
+  camera->cl.param = camera;
+
+  add_callback(&camera->cl, "id", &set_id);
+  add_callback(&camera->cl, "set-label", &set_label);
+  add_callback(&camera->cl, "set-state", &set_state);
+  add_callback(&camera->cl, "set-precision", &set_precision);
 
   set_label(camera, "label#DEFAULT_LABEL");
   return (camera);

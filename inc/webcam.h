@@ -117,10 +117,9 @@ void                    set_state(void* camera, char *data);
 void                    set_precision(void* camera, char *data);
 void                    send_image(char* filename, SOCKET sock, t_camera *camera);
 void                    send_frame(SOCKET sock, t_buffer head);
-void                    stream_video(t_camera *camera);
 
 /** ================= CAMERA FUNCTIONS ================= **/
-t_camera*               open_device(const char* dev, uint32_t width, uint32_t height);
+t_camera*               open_device(const char* dev, uint32_t width, uint32_t height, SOCKET sock);
 void                    capability_requests(t_camera *camera);
 void                    formarq_request(t_camera *camera);
 void                    buffer_request(t_camera *camera);

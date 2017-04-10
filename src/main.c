@@ -32,15 +32,7 @@ int                     main(int argc, char **argv) {
     exit_failure("connect");
   VALIDATE();
 
-  camera = open_device(device, 1280, 720);
-  camera->sock = &sock;
-  camera->cl = client(&sock, 1);
-  camera->cl.param = camera;
-
-  add_callback(&camera->cl, "id", &set_id);
-  add_callback(&camera->cl, "set-label", &set_label);
-  add_callback(&camera->cl, "set-state", &set_state);
-  add_callback(&camera->cl, "set-precision", &set_precision);
+  camera = open_device(device, 1280, 720, sock);
 
   get_infos(sock, camera);
   init_device(camera);

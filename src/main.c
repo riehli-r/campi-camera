@@ -37,6 +37,8 @@ int                     main(int argc, char **argv) {
   camera->cl = client(&sock, 1);
   camera->cl.param = camera;
   add_callback(&camera->cl, "id", &set_id);
+  add_callback(&camera->cl, "label", &set_label);
+
   get_infos(sock, camera);
   init_device(camera);
   start_camera(camera);

@@ -9,7 +9,7 @@ void                    reco(SOCKET sock, t_camera *camera) {
   buffer = send_request(sock, (rq_req) {.event = "reco", .data = camera->infos.id, .return_buffer = 1});
   if (!strcmp(buffer, "reco#err")) {
     printf("Invalid ID\n");
-    req_id(sock, camera);
+    req_id(camera);
   }
   else {
     set_label(camera, buffer);

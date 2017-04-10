@@ -1,7 +1,6 @@
 #include "campi/webcam.h"
 #include "campi/request.h"
 
-
 void                    set_id(void* camera, char *data) {
 
   t_camera              *tmp;
@@ -11,14 +10,13 @@ void                    set_id(void* camera, char *data) {
   save_id(tmp->infos.id);
 }
 
-void                    set_label(t_camera* camera, char *buffer) {
+void                    set_label(void* camera, char *data) {
 
-  rq_req                 req;
+  t_camera              *tmp;
 
-  req = buff_to_request(buffer);
-  if (camera->infos.label)
-    memcpy(camera->infos.label, req.data, strlen(req.data));
-  delete_request(req);
+  tmp = (t_camera*)camera;
+  if (tmp->infos.label)
+    memcpy(tmp->infos.label, data, strlen(data));
 }
 
 void                    set_state(t_camera* camera, char *buffer) {
